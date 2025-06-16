@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ dish.name }}</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>{{ dish.name }}</h1>
+        {# <img src="{{ dish.image.url }}" alt="{{ dish.name }}" style="max-width:300px;"> #}
+        <p><strong>Опис:</strong> {{ dish.description }}</p>
+        <p><strong>Інгредієнти:</strong> {{ dish.ingredients }}</p>
+        <p><strong>Ціна:</strong> {{ dish.price }} грн</p>
+        <a href="{% url 'menu' %}">← Назад до меню</a>
+    </div>
+</body>
+</html>

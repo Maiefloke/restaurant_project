@@ -1,0 +1,4 @@
+{% for order in orders %}
+  <p>Замовлення #{{ order.id }} — {{ order.created_at }}</p>
+  <a href="{% url 'repeat_order' order.id %}">Повторити</a>
+{% endfor %}

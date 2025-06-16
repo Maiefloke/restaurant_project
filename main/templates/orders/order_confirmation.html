@@ -1,0 +1,6 @@
+<h2>Дякуємо за замовлення!</h2>
+<p>Ваше замовлення №{{ order.id }} прийнято.</p>
+<p>Контактна особа: {{ order.full_name }}</p>
+<p>Телефон: {{ order.phone }}</p>
+<p>Адреса доставки: {{ order.address }}</p>
+<p>Спосіб оплати: {{ order.get_payment_method_display }}</p>
