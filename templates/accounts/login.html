@@ -1,54 +1,10 @@
-{% extends 'base/base.html' %}
-
+{% extends "base.html" %}
 {% block title %}Вхід{% endblock %}
-
 {% block content %}
-<div style="max-width: 500px; margin: 80px auto; padding: 40px; background-color: #f9f9f9; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
-    <h1 style="font-size: 32px; text-align: center; margin-bottom: 30px;">🔐 Вхід</h1>
-
-    {% if messages %}
-        <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
-        {% for message in messages %}
-            <li style="background-color: #ffe0e0; padding: 10px; border-radius: 6px; margin-bottom: 10px; text-align: center; color: #b30000;">{{ message }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-
-    <form method="POST" style="display: flex; flex-direction: column; gap: 20px;">
-        {% csrf_token %}
-        {% for field in form %}
-            <div style="display: flex; flex-direction: column; text-align: left;">
-                <label for="{{ field.id_for_label }}" style="font-weight: bold; margin-bottom: 5px;">{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                    <small style="color: red;">{{ field.errors|striptags }}</small>
-                {% endif %}
-            </div>
-        {% endfor %}
-        <button type="submit" style="padding: 12px; background-color: #2196F3; color: white; font-size: 16px; border: none; border-radius: 8px; cursor: pointer;">
-            ➡️ Увійти
-        </button>
-    </form>
-
-    <p style="text-align: center; margin-top: 20px;">
-        Немає акаунта? <a href="{% url 'accounts:register' %}" style="color: #2196F3;">Зареєструватися</a>
-    </p>
-</div>
-
-<style>
-input, select, textarea {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    background-color: #fff;
-    box-sizing: border-box;
-}
-input:focus, select:focus, textarea:focus {
-    border-color: #2196F3;
-    outline: none;
-    background-color: #f0f8ff;
-}
-</style>
+<h2 class="mb-4">Вхід</h2>
+<form method="post" class="card p-4 shadow-sm">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Увійти</button>
+</form>
 {% endblock %}

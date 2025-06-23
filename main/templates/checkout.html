@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8" />
+    <title>Оформлення замовлення</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-$END$
+<nav class="navbar navbar-light bg-light mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">Сушия</a>
+    <div>
+      <a href="{% url 'cart' %}" class="btn btn-outline-primary me-2">Кошик</a>
+      <a href="{% url 'menu' %}" class="btn btn-outline-secondary">Меню</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+    <h2 class="mb-4">Оформлення замовлення</h2>
+    <form method="post" class="mb-5">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <h4 class="mt-4">Ваше замовлення:</h4>
+        <ul class="list-group mb-3">
+            {% for item in cart_items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ item.dish.name }}
+                    <span>{{ item.quantity }} x {{ item.dish.price }} грн</span>
+                </li>
+            {% empty %}
+                <li class="list-group-item">Кошик порожній</li>
+            {% endfor %}
+        </ul>
+
+        <p class="fs-5 fw-bold">Загальна сума: {{ total }} грн</p>
+
+        <button type="submit" class="btn btn-success btn-lg">Підтвердити замовлення</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

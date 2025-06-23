@@ -3,15 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ dish.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-4">
-        <h1>{{ dish.name }}</h1>
-        {# <img src="{{ dish.image.url }}" alt="{{ dish.name }}" style="max-width:300px;"> #}
-        <p><strong>Опис:</strong> {{ dish.description }}</p>
-        <p><strong>Інгредієнти:</strong> {{ dish.ingredients }}</p>
-        <p><strong>Ціна:</strong> {{ dish.price }} грн</p>
-        <a href="{% url 'menu' %}">← Назад до меню</a>
+<nav class="navbar navbar-light bg-light mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">Сушия</a>
+    <a href="{% url 'menu' %}" class="btn btn-outline-primary">← Назад до меню</a>
+  </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% if dish.image %}
+                <img src="{{ dish.image.url }}" alt="{{ dish.name }}" class="img-fluid rounded shadow-sm">
+            {% else %}
+                <img src="https://via.placeholder.com/400x300?text=Немає+зображення" alt="Немає зображення" class="img-fluid rounded shadow-sm">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ dish.name }}</h1>
+            <p><strong>Опис:</strong> {{ dish.description }}</p>
+            <p><strong>Інгредієнти:</strong> {{ dish.ingredients }}</p>
+            <p class="fs-4 fw-bold">Ціна: {{ dish.price }} грн</p>
+            <form method="POST" action="{% url 'add_to_cart' dish.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-lg mt-3">Додати до кошика</button>
+            </form>
+            <a href="{% url 'review_list' dish.id %}" class="btn btn-link mt-3">Переглянути всі відгуки</a>
+        </div>
     </div>
+
+    <!-- Відгуки -->
+    <div class="mt-5">
+        <h2>Відгуки</h2>
+        {% if reviews %}
+            <ul class="list-group">
+                {% for review in reviews %}
+                    <li class="list-group-item">
+                        <strong>Рейтинг:</strong> {{ review.rating }} / 5<br>
+                        <p>{{ review.comment }}</p>
+                        <small class="text-muted">Автор: {{ review.user.username }} | {{ review.created_at|date:"d.m.Y H:i" }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Поки що немає відгуків. Будьте першим, хто залишить відгук!</p>
+        {% endif %}
+        <a href="{% url 'leave_review' dish.id %}" class="btn btn-primary mt-3">Залишити відгук</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

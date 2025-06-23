@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Залишити відгук</h2>
+        <a href="{% url 'menu' %}" class="btn btn-outline-secondary">← Назад до меню</a>
+    </div>
+
+    <form method="post" class="p-4 border rounded shadow-sm bg-light">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Надіслати відгук</button>
+    </form>
+</div>
+{% endblock %}

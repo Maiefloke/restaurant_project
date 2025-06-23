@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Ваш кошик</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Страва</th>
+                <th>Кількість</th>
+                <th>Ціна</th>
+                <th>Всього</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.dish.name }}</td>
+                <td>
+                    <form method="post" action="{% url 'update_cart_quantity' item.id %}">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Оновити</button>
+                    </form>
+                </td>
+                <td>{{ item.dish.price }} ₴</td>
+                <td>{{ item.get_total_price }} ₴</td>
+                <td>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-sm btn-danger">Видалити</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>Загальна вартість: {{ total }} ₴</h4>
+    <a href="{% url 'checkout' %}" class="btn btn-primary">Оформити замовлення</a>
+</div>
+{% endblock %}

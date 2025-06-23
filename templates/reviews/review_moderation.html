@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Модерація відгуків</h2>
+
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="card mb-3 {% if not review.is_approved %}border-warning bg-light{% else %}border-success{% endif %} shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ review.user.username }}</h5>
+                    <p class="card-text">{{ review.text }}</p>
+                    <p class="text-muted">Оцінка: {{ review.rating }}/5</p>
+
+                    <form method="post" action="{% url 'approve_review' review.id %}">
+                        {% csrf_token %}
+                        {% if not review.is_approved %}
+                            <button type="submit" class="btn btn-outline-success">Схвалити</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-outline-danger">Видалити</button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Немає відгуків для модерації.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary mt-3">← Назад на головну</a>
+</div>
+{% endblock %}

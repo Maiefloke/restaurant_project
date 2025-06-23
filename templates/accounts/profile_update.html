@@ -1,7 +1,10 @@
-<!-- templates/accounts/profile_update.html -->
+{% extends "base.html" %}
+{% block title %}Редагувати профіль{% endblock %}
+{% block content %}
 <h2>Редагувати профіль</h2>
-<form method="post">
+<form method="post" class="card p-4 shadow-sm">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Зберегти</button>
+  <button type="submit" class="btn btn-success">Зберегти</button>
 </form>
+{% endblock %}

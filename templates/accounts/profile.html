@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Профіль{% endblock %}
+{% block content %}
+<h2>Профіль користувача</h2>
+<ul class="list-group my-3">
+  <li class="list-group-item"><strong>Ім'я:</strong> {{ request.user.username }}</li>
+  <li class="list-group-item"><strong>Email:</strong> {{ request.user.email }}</li>
+</ul>
+<a href="{% url 'edit_profile' %}" class="btn btn-warning">Змінити дані</a>
+<a href="{% url 'logout' %}" class="btn btn-secondary ms-2">Вийти</a>
+<a href="{% url 'home' %}" class="btn btn-outline-dark ms-2">На головну</a>
+<a href="{% url 'order_history' %}" class="btn btn-outline-dark ms-2">Історія замовлень</a>
+{% endblock %}
