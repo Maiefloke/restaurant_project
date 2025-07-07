@@ -3,30 +3,102 @@
 {% block title %}Залишити відгук{% endblock %}
 
 {% block content %}
-<div style="max-width: 600px; margin: 30px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
-  <h2 style="text-align: center; color: #333;">Залишити відгук про "{{ dish.name }}"</h2>
+<style>
+  .review-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px 25px;
+    background: #1e4620; /* темно-зелений фон */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,128,0,0.4);
+    color: #d1f2eb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .review-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-shadow: 0 1px 4px #134a16;
+  }
+  form label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+  form select, form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    background-color: #3a7d44;
+    color: #d1f2eb;
+    box-shadow: inset 0 0 8px #2c6533;
+    transition: background-color 0.3s ease;
+  }
+  form select:focus, form textarea:focus {
+    background-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 12px #81c784;
+  }
+  form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  button[type="submit"] {
+    background-color: #4caf50;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: block;
+    margin: 25px auto 0;
+    box-shadow: 0 6px 20px #4caf5080;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  button[type="submit"]:hover, button[type="submit"]:focus {
+    background-color: #67c767;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px #67c767cc;
+  }
+  nav {
+    margin-top: 35px;
+    text-align: center;
+  }
+  nav a {
+    margin: 0 15px;
+    color: #a7d7a7;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  nav a:hover, nav a:focus {
+    color: #d1f2eb;
+    text-decoration: underline;
+  }
+</style>
 
-  <form method="post" style="margin-top: 20px;">
+<div class="review-container">
+  <h2>Залишити відгук про "{{ dish.name }}"</h2>
+
+  <form method="post">
     {% csrf_token %}
-    <div style="margin-bottom: 15px;">
-      {{ form.rating.label_tag }}<br>
-      {{ form.rating }}
-    </div>
+    <label for="{{ form.rating.id_for_label }}">{{ form.rating.label }}</label>
+    {{ form.rating }}
 
-    <div style="margin-bottom: 15px;">
-      {{ form.comment.label_tag }}<br>
-      {{ form.comment }}
-    </div>
+    <label for="{{ form.comment.id_for_label }}" style="margin-top: 20px;">{{ form.comment.label }}</label>
+    {{ form.comment }}
 
-    <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; border: none; color: white; border-radius: 5px; cursor: pointer;">
-      Відправити відгук
-    </button>
+    <button type="submit">Відправити відгук</button>
   </form>
 
-  <nav style="margin-top: 25px; text-align: center;">
-    <a href="{% url 'home' %}" style="margin-right: 15px; color: #2196F3; text-decoration: none;">Головна</a>
-    <a href="{% url 'menu' %}" style="margin-right: 15px; color: #2196F3; text-decoration: none;">Меню</a>
-    <a href="{% url 'dish_detail' dish.id %}" style="color: #2196F3; text-decoration: none;">Деталі страви</a>
+  <nav>
+    <a href="{% url 'home' %}">Головна</a>
+    <a href="{% url 'menu' %}">Меню</a>
+    <a href="{% url 'dish_detail' dish.id %}">Деталі страви</a>
   </nav>
 </div>
 {% endblock %}

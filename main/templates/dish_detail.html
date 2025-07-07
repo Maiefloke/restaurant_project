@@ -1,9 +1,96 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>{{ dish.name }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      body {
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #e6f4ea;
+        padding-bottom: 3rem;
+      }
+      nav.navbar {
+        background-color: rgba(255 255 255 / 0.9);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+      }
+      .navbar-brand {
+        font-weight: 700;
+        color: #14532d !important;
+      }
+      .btn-outline-primary, .btn-primary, .btn-success, .btn-link {
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+      .btn-outline-primary:hover, .btn-outline-primary:focus {
+        background-color: #27ae60;
+        border-color: #27ae60;
+        color: white;
+        box-shadow: 0 6px 25px #27ae60;
+        transform: translateY(-3px);
+      }
+      .btn-success {
+        background-color: #14532d;
+        border: none;
+        color: #d1f2eb;
+        box-shadow: 0 5px 20px #14532daa;
+      }
+      .btn-success:hover, .btn-success:focus {
+        background-color: #2ecc71;
+        box-shadow: 0 8px 30px #2ecc71;
+        color: white;
+        transform: translateY(-3px);
+      }
+      .btn-link {
+        color: #d1f2eb;
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      .btn-link:hover, .btn-link:focus {
+        color: #27ae60;
+        text-decoration: underline;
+        transform: translateY(-2px);
+      }
+      h1, h2 {
+        text-shadow: 0 1px 5px #14532d;
+      }
+      .img-fluid {
+        border-radius: 1rem;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+      }
+      .list-group {
+        background: #14532d;
+        border-radius: 0.75rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        margin-top: 1rem;
+      }
+      .list-group-item {
+        color: #d1f2eb;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: none;
+        padding: 1rem 1.5rem;
+        background: transparent;
+      }
+      .list-group-item strong {
+        color: #a3f7a3;
+      }
+      small.text-muted {
+        color: #b9d9b9;
+      }
+      p {
+        font-size: 1.1rem;
+      }
+      .container > .row > .col-md-6:last-child {
+        padding-left: 3rem;
+      }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-light bg-light mb-4">
@@ -17,9 +104,9 @@
     <div class="row">
         <div class="col-md-6">
             {% if dish.image %}
-                <img src="{{ dish.image.url }}" alt="{{ dish.name }}" class="img-fluid rounded shadow-sm">
+                <img src="{{ dish.image.url }}" alt="{{ dish.name }}" class="img-fluid shadow-sm" />
             {% else %}
-                <img src="https://via.placeholder.com/400x300?text=Немає+зображення" alt="Немає зображення" class="img-fluid rounded shadow-sm">
+                <img src="https://via.placeholder.com/400x300?text=Немає+зображення" alt="Немає зображення" class="img-fluid shadow-sm" />
             {% endif %}
         </div>
         <div class="col-md-6">
@@ -35,14 +122,13 @@
         </div>
     </div>
 
-    <!-- Відгуки -->
     <div class="mt-5">
         <h2>Відгуки</h2>
         {% if reviews %}
             <ul class="list-group">
                 {% for review in reviews %}
                     <li class="list-group-item">
-                        <strong>Рейтинг:</strong> {{ review.rating }} / 5<br>
+                        <strong>Рейтинг:</strong> {{ review.rating }} / 5<br />
                         <p>{{ review.comment }}</p>
                         <small class="text-muted">Автор: {{ review.user.username }} | {{ review.created_at|date:"d.m.Y H:i" }}</small>
                     </li>

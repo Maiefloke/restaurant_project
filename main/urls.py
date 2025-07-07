@@ -15,6 +15,7 @@ urlpatterns = [
     path('dish/<int:dish_id>/reviews/', views.review_list, name='review_list'),
     path('dish/<int:dish_id>/add-review/', views.leave_review, name='add_review'),
     path('dish/<int:dish_id>/review/new/', views.leave_review, name='leave_review'),
+    path('review/<int:review_id>/delete/', views.delete_review, name='delete_review'),
     #path('admin/reviews/', views.review_moderation, name='review_moderation'),
     #path('admin/reviews/approve/<int:review_id>/', views.approve_review, name='approve_review'),
 ]

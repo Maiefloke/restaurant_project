@@ -1,13 +1,117 @@
 {% extends "base.html" %}
 {% block title %}Профіль{% endblock %}
 {% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e6f4ea;
+    padding: 2rem;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0 1px 5px #14532d;
+  }
+  .alert-success {
+    background-color: #27ae60;
+    border: none;
+    color: white;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 10px #27ae60aa;
+    text-align: center;
+  }
+  ul.list-group {
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    background: #14532d;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  ul.list-group-item {
+    background: transparent;
+    border: none;
+    color: #d1f2eb;
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #27ae60;
+  }
+  ul.list-group-item:last-child {
+    border-bottom: none;
+  }
+  a.btn {
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.6rem 1.8rem;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin: 0 0.5rem 1rem 0;
+    display: inline-block;
+    text-decoration: none;
+  }
+  a.btn-warning {
+    background: #f39c12;
+    color: white;
+    border: none;
+  }
+  a.btn-warning:hover, a.btn-warning:focus {
+    background: #f1c40f;
+    box-shadow: 0 6px 20px #f1c40f;
+    transform: translateY(-3px);
+    color: white;
+  }
+  a.btn-secondary {
+    background: #34495e;
+    color: #d1f2eb;
+    border: none;
+  }
+  a.btn-secondary:hover, a.btn-secondary:focus {
+    background: #2c3e50;
+    box-shadow: 0 6px 20px #27ae60;
+    transform: translateY(-3px);
+    color: #d1f2eb;
+  }
+  a.btn-outline-dark {
+    background: transparent;
+    border: 2px solid #d1f2eb;
+    color: #d1f2eb;
+  }
+  a.btn-outline-dark:hover, a.btn-outline-dark:focus {
+    background: #27ae60;
+    border-color: #27ae60;
+    color: white;
+    box-shadow: 0 6px 20px #27ae60;
+    transform: translateY(-3px);
+  }
+  .btn-container {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+</style>
+
 <h2>Профіль користувача</h2>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
 <ul class="list-group my-3">
-  <li class="list-group-item"><strong>Ім'я:</strong> {{ request.user.username }}</li>
+  <li class="list-group-item"><strong>Ім'я користувача:</strong> {{ request.user.username }}</li>
+  <li class="list-group-item"><strong>Ім'я:</strong> {{ request.user.first_name }}</li>
+  <li class="list-group-item"><strong>Прізвище:</strong> {{ request.user.last_name }}</li>
   <li class="list-group-item"><strong>Email:</strong> {{ request.user.email }}</li>
 </ul>
-<a href="{% url 'edit_profile' %}" class="btn btn-warning">Змінити дані</a>
-<a href="{% url 'logout' %}" class="btn btn-secondary ms-2">Вийти</a>
-<a href="{% url 'home' %}" class="btn btn-outline-dark ms-2">На головну</a>
-<a href="{% url 'order_history' %}" class="btn btn-outline-dark ms-2">Історія замовлень</a>
+
+<div class="btn-container">
+  <a href="{% url 'edit_profile' %}" class="btn btn-warning">Змінити дані</a>
+  <a href="{% url 'logout' %}" class="btn btn-secondary">Вийти</a>
+  <a href="{% url 'home' %}" class="btn btn-outline-dark">На головну</a>
+  <a href="{% url 'order_history' %}" class="btn btn-outline-dark">Історія замовлень</a>
+</div>
 {% endblock %}

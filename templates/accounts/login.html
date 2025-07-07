@@ -1,11 +1,102 @@
 {% extends "base.html" %}
 {% block title %}Вхід{% endblock %}
 {% block content %}
-<h2 class="mb-4">Вхід</h2>
-<form method="post" class="card p-4 shadow-sm">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Увійти</button>
-</form>
-<a href="{% url 'register' %}" class="btn btn-outline-dark ms-2">Зареєструватися</a>
+<style>
+  body {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  form.card {
+    background: #14532d;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    color: #e6f4ea;
+  }
+  form.card p {
+    margin-bottom: 1rem;
+  }
+  form.card input[type="text"],
+  form.card input[type="password"],
+  form.card input[type="email"] {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: none;
+    margin-top: 0.3rem;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+  }
+  form.card input[type="text"]:focus,
+  form.card input[type="password"]:focus,
+  form.card input[type="email"]:focus {
+    box-shadow: 0 0 8px 2px #58d68d;
+    background-color: #1e5631;
+    color: #d1f2eb;
+  }
+  .btn {
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .btn-primary {
+    background: #27ae60;
+    border: none;
+    color: white;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background: #2ecc71;
+    box-shadow: 0 6px 20px #2ecc71;
+    transform: translateY(-2px);
+  }
+  .btn-outline-dark {
+    background: transparent;
+    border: 2px solid #d1f2eb;
+    color: #d1f2eb;
+  }
+  .btn-outline-dark:hover,
+  .btn-outline-dark:focus {
+    background: #27ae60;
+    border-color: #27ae60;
+    color: white;
+    box-shadow: 0 6px 20px #27ae60;
+    transform: translateY(-2px);
+  }
+  a.btn {
+    margin-top: 1rem;
+    display: inline-block;
+  }
+  h2 {
+    color: #d1f2eb;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0 1px 5px #14532d;
+  }
+</style>
+
+<div>
+  <h2>Вхід</h2>
+  <form method="post" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary w-100 mt-3">Увійти</button>
+  </form>
+  <div class="d-flex justify-content-center gap-3 mt-3 flex-wrap">
+    <a href="{% url 'register' %}" class="btn btn-outline-dark">Зареєструватися</a>
+    <a href="{% url 'home' %}" class="btn btn-outline-dark">Повернутися на головну</a>
+  </div>
+</div>
+
 {% endblock %}

@@ -1,27 +1,59 @@
 {% extends 'base.html' %}
+
 {% block content %}
+<style>
+  body {
+    background: linear-gradient(to right, #e6ffe6, #ccf5cc);
+  }
+
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 128, 0, 0.2);
+  }
+
+  .btn-animated {
+    transition: all 0.3s ease;
+  }
+
+  .btn-animated:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.4);
+  }
+</style>
+
 <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Відгуки про "{{ dish.name }}"</h2>
-        <a href="{% url 'menu' %}" class="btn btn-outline-secondary">← Назад до меню</a>
-    </div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Відгуки про "{{ dish.name }}"</h2>
+    <a href="{% url 'menu' %}" class="btn btn-outline-secondary btn-animated">← Назад до меню</a>
+  </div>
 
-    {% if reviews %}
-        {% for review in reviews %}
-            {% if review.is_approved %}
-                <div class="card mb-3 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ review.user.username }}</h5>
-                        <p class="card-text">{{ review.text }}</p>
-                        <p class="text-muted">Оцінка: {{ review.rating }} / 5</p>
-                    </div>
-                </div>
+  {% if reviews %}
+    {% for review in reviews %}
+      {% if review.approved %}
+        <div class="card mb-3 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ review.user.username }}</h5>
+            <p class="card-text">{{ review.text }}</p>
+            <p class="text-muted">Оцінка: {{ review.rating }} / 5</p>
+
+            {% if request.user == review.user %}
+              <form action="{% url 'delete_review' review.id %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger btn-animated">Видалити</button>
+              </form>
             {% endif %}
-        {% endfor %}
-    {% else %}
-        <p>Ще немає відгуків. Станьте першим!</p>
-    {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <p>Ще немає відгуків. Станьте першим!</p>
+  {% endif %}
 
-    <a href="{% url 'add_review' dish.id %}" class="btn btn-primary mt-3">Залишити свій відгук</a>
+  <a href="{% url 'add_review' dish.id %}" class="btn btn-success mt-3 btn-animated">Залишити свій відгук</a>
 </div>
 {% endblock %}

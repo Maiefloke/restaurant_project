@@ -1,8 +1,96 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-    <h2>Ваш кошик</h2>
-    <table class="table">
+<style>
+  body {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: #e6f4ea;
+  }
+  .container {
+    max-width: 900px;
+    margin-top: 2rem;
+  }
+  table {
+    background: #14532d;
+    border-radius: 10px;
+    color: #d1f2eb;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+  thead th {
+    border-bottom: 2px solid #27ae60;
+    padding: 12px;
+  }
+  tbody td {
+    padding: 12px;
+    vertical-align: middle;
+  }
+  input[type=number] {
+    width: 60px;
+    border-radius: 6px;
+    border: 1px solid #27ae60;
+    padding: 5px 8px;
+    background-color: #1e4620;
+    color: #d1f2eb;
+  }
+  input[type=number]:focus {
+    outline: none;
+    border-color: #2ecc71;
+    box-shadow: 0 0 8px #2ecc71;
+    background-color: #14532d;
+  }
+  .btn-outline-primary {
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(39,174,96,0.5);
+  }
+  .btn-outline-primary:hover, .btn-outline-primary:focus {
+    background-color: #2ecc71;
+    border-color: #2ecc71;
+    color: #fff;
+    box-shadow: 0 8px 30px #2ecc71;
+    transform: translateY(-3px);
+  }
+  .btn-danger {
+    border-radius: 30px;
+    font-weight: 600;
+    background-color: #c53030;
+    border: none;
+    box-shadow: 0 4px 15px rgba(197,48,48,0.7);
+    transition: all 0.3s ease;
+  }
+  .btn-danger:hover, .btn-danger:focus {
+    background-color: #e53e3e;
+    box-shadow: 0 8px 30px #e53e3e;
+    transform: translateY(-3px);
+    color: #fff;
+  }
+  .btn-primary {
+    background-color: #27ae60;
+    border-radius: 50px;
+    padding: 0.6rem 2rem;
+    font-weight: 700;
+    box-shadow: 0 5px 20px rgba(39,174,96,0.7);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    color: #fff;
+    border: none;
+  }
+  .btn-primary:hover, .btn-primary:focus {
+    background-color: #2ecc71;
+    box-shadow: 0 8px 30px #2ecc71;
+    transform: translateY(-4px);
+    color: #fff;
+  }
+  h4 {
+    margin-top: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 1px 4px #14532d;
+  }
+</style>
+
+<div class="container">
+    <h2 class="mb-4 text-center">Ваш кошик</h2>
+    {% if cart_items %}
+    <table class="table table-borderless text-center align-middle">
         <thead>
             <tr>
                 <th>Страва</th>
@@ -19,8 +107,8 @@
                 <td>
                     <form method="post" action="{% url 'update_cart_quantity' item.id %}">
                         {% csrf_token %}
-                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                        <button type="submit" class="btn btn-sm btn-outline-primary">Оновити</button>
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" />
+                        <button type="submit" class="btn btn-sm btn-outline-primary ms-2">Оновити</button>
                     </form>
                 </td>
                 <td>{{ item.dish.price }} ₴</td>
@@ -33,7 +121,15 @@
         </tbody>
     </table>
 
-    <h4>Загальна вартість: {{ total }} ₴</h4>
-    <a href="{% url 'checkout' %}" class="btn btn-primary">Оформити замовлення</a>
+    <h4 class="text-end">Загальна вартість: {{ total }} ₴</h4>
+    <div class="text-end">
+      <a href="{% url 'checkout' %}" class="btn btn-primary">Оформити замовлення</a><a href="{% url 'menu' %}" class="btn btn-outline-primary">Перейти до меню</a>
+    </div>
+    {% else %}
+      <p class="text-center fs-4">Ваш кошик порожній.</p>
+      <div class="text-center mt-3">
+        <a href="{% url 'menu' %}" class="btn btn-outline-primary">Перейти до меню</a>
+      </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,10 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to bottom right, #dfffdc, #c0f2b2);
+  }
+
+  .delete-box {
+    max-width: 600px;
+    margin: 80px auto;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 128, 0, 0.2);
+    padding: 30px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn-animated {
+    transition: all 0.3s ease;
+  }
+
+  .btn-animated:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.5);
+  }
+</style>
+
+<div class="delete-box">
+  <h3 class="mb-4 text-danger">Підтвердження видалення</h3>
+  <p class="mb-4">Ви впевнені, що хочете видалити цей відгук?</p>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-lg btn-animated me-2">Так, видалити</button>
+    <a href="{% url 'dish_detail' review.dish.id %}" class="btn btn-outline-secondary btn-lg btn-animated">Скасувати</a>
+  </form>
+</div>
+{% endblock %}

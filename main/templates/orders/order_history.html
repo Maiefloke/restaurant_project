@@ -1,6 +1,70 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: #e6f4ea;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .container {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+  }
+  h2 {
+    text-shadow: 0 1px 5px #14532d;
+    font-weight: 700;
+  }
+  .list-group-item {
+    background: #14532d;
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    color: #d1f2eb;
+  }
+  .list-group-item strong {
+    font-size: 1.2rem;
+    color: #a3f7a3;
+  }
+  ul > li {
+    font-weight: 600;
+  }
+  a.btn-outline-secondary, a.btn-outline-primary, .btn-primary {
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.4rem 1.3rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+  a.btn-outline-secondary:hover, a.btn-outline-secondary:focus {
+    background-color: #14532d;
+    border-color: #14532d;
+    color: #d1f2eb !important;
+    box-shadow: 0 6px 25px #14532d;
+    transform: translateY(-3px);
+  }
+  a.btn-outline-primary:hover, a.btn-outline-primary:focus {
+    background-color: #27ae60;
+    border-color: #27ae60;
+    color: white !important;
+    box-shadow: 0 6px 25px #27ae60;
+    transform: translateY(-3px);
+  }
+  .btn-primary {
+    background-color: #14532d;
+    border: none;
+    color: #d1f2eb;
+    box-shadow: 0 5px 20px #14532daa;
+  }
+  .btn-primary:hover, .btn-primary:focus {
+    background-color: #2ecc71;
+    box-shadow: 0 8px 30px #2ecc71;
+    color: white;
+    transform: translateY(-3px);
+  }
+</style>
+
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Історія замовлень</h2>
@@ -18,7 +82,7 @@
               <li>{{ item.dish.name }} — {{ item.quantity }} шт.</li>
             {% endfor %}
           </ul>
-          <a href="{% url 'repeat_order' order.id %}" class="btn btn-sm btn-primary mt-2">Повторити</a>
+          <a href="{% url 'repeat_order' order.id %}" class="btn btn-primary mt-2">Повторити</a>
         </li>
       {% endfor %}
     </ul>

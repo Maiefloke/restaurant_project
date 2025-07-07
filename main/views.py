@@ -136,23 +136,24 @@ def approve_review(request, review_id):
     review.save()
     return redirect('review_moderation')
 
-@user_passes_test(lambda u: u.is_staff)
+@login_required
 def review_list(request, dish_id):
     dish = get_object_or_404(Dish, id=dish_id)
-    reviews = Review.objects.filter(dish=dish, approved=True)  # якщо є модерація
+    reviews = Review.objects.filter(dish=dish, approved=True)
     return render(request, 'main/review_list.html', {'dish': dish, 'reviews': reviews})
 
-@user_passes_test(lambda u: u.is_staff)
-def leave_review(request, dish_id):
-    dish = get_object_or_404(Dish, id=dish_id)
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+
+    # Перевірка: тільки автор може видалити свій коментар
+    if review.user != request.user:
+        return redirect('dish_detail', dish_id=review.dish.id)
+
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.dish = dish
-            review.user = request.user
-            review.save()
-            return redirect('dish_detail', dish_id=dish.id)
-    else:
-        form = ReviewForm()
-    return render(request, 'reviews/leave_review.html', {'form': form, 'dish': dish})
+        dish_id = review.dish.id
+        review.delete()
+        return redirect('dish_detail', dish_id=dish_id)
+
+    return render(request, 'reviews/confirm_delete.html', {'review': review})

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 from .forms import RegisterForm, LoginForm, UserUpdateForm
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.urls import reverse
 
 def register_view(request):
     if request.method == 'POST':
@@ -26,7 +28,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('/login/')
+    return redirect(reverse('login'))
 
 @login_required
 def profile_view(request):
@@ -38,9 +40,13 @@ def profile_update(request):
         form = UserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Профіль оновлено успішно!')
             return redirect('profile')
+        else:
+            messages.error(request, 'Помилка у формі. Перевірте введені дані.')
     else:
         form = UserUpdateForm(instance=request.user)
+
     return render(request, 'accounts/profile_update.html', {'form': form})
 
 

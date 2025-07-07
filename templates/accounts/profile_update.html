@@ -1,10 +1,92 @@
-{% extends "base.html" %}
-{% block title %}Редагувати профіль{% endblock %}
+{% extends 'base.html' %}
+
 {% block content %}
-<h2>Редагувати профіль</h2>
-<form method="post" class="card p-4 shadow-sm">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-success">Зберегти</button>
-</form>
+<style>
+  body {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e6f4ea;
+  }
+  .container {
+    max-width: 500px;
+    background-color: #14532d;
+    padding: 2rem 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    margin-top: 3rem;
+    color: #d1f2eb;
+  }
+  h2 {
+    font-weight: 700;
+    margin-bottom: 1.8rem;
+    text-align: center;
+    text-shadow: 0 1px 5px #0d2d12;
+  }
+  form label {
+    font-weight: 600;
+    margin-top: 1rem;
+    display: block;
+  }
+  form input, form select {
+    width: 100%;
+    padding: 10px 14px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: none;
+    background-color: #3a7d44;
+    color: #d1f2eb;
+    font-size: 1rem;
+    box-shadow: inset 0 0 8px #2c6533;
+    transition: background-color 0.3s ease;
+  }
+  form input:focus, form select:focus {
+    background-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 12px #81c784;
+  }
+  .alert-danger {
+    background-color: #a33e3e;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+    color: #ffe1e1;
+    box-shadow: 0 0 15px #7b2a2a;
+  }
+  button.btn-primary {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+    padding: 12px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 20px #4caf5080;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  button.btn-primary:hover, button.btn-primary:focus {
+    background-color: #67c767;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px #67c767cc;
+  }
+</style>
+
+<div class="container">
+  <h2>Редагування профілю</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        {{ form.errors }}
+      </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+  </form>
+</div>
 {% endblock %}

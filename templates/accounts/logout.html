@@ -1,6 +1,53 @@
 {% extends "base.html" %}
 {% block title %}Вихід{% endblock %}
 {% block content %}
-<h2>Ви вийшли з акаунту.</h2>
-<a href="{% url 'login' %}" class="btn btn-outline-primary mt-3">Увійти знову</a>
+<style>
+  body {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e6f4ea;
+  }
+  .logout-message {
+    background: #14532d;
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  h2 {
+    margin-bottom: 1.5rem;
+    text-shadow: 0 1px 5px #14532d;
+  }
+  a.btn {
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 0.6rem 2rem;
+    font-size: 1.2rem;
+    background: transparent;
+    border: 2px solid #d1f2eb;
+    color: #d1f2eb;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: inline-block;
+  }
+  a.btn:hover,
+  a.btn:focus {
+    background: #27ae60;
+    border-color: #27ae60;
+    color: white;
+    box-shadow: 0 6px 20px #27ae60;
+    transform: translateY(-3px);
+  }
+</style>
+
+<div class="logout-message">
+  <h2>Ви вийшли з акаунту.</h2>
+  <a href="{% url 'login' %}" class="btn">Увійти знову</a>
+</div>
 {% endblock %}
