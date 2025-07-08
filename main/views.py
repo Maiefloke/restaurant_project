@@ -16,12 +16,16 @@ def home(request):
 
 def menu(request):
     sushi_sets = Dish.objects.filter(category='Сети')
+    rolls = Dish.objects.filter(category='Роли')
     drinks = Dish.objects.filter(category='Напої')
     desserts = Dish.objects.filter(category='Десерти')
+    soups = Dish.objects.filter(category='Супи')
     return render(request, 'menu.html', {
         'sushi_sets': sushi_sets,
+        'rolls': rolls,
         'drinks': drinks,
         'desserts': desserts,
+        'soups': soups,
     })
 
 def dish_detail(request, dish_id):
